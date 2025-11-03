@@ -1,9 +1,9 @@
 import { Text, TouchableOpacity } from 'react-native';
 
-function Button({text, color, onClick}) {
+function Button({backgroundColor, title, color = 'white', flex = 1, disabled = false, onClick}) {
     return(
-        <TouchableOpacity style={{flex: 1, backgroundColor: color, justifyContent: 'center'}} onPress={onClick}>
-            <Text style={{textAlign: 'center', color: 'white', fontSize: 24}}>{text}</Text>
+        <TouchableOpacity disabled={disabled} style={{flex: flex, flexBasis: flex*80, backgroundColor: backgroundColor, justifyContent: 'center'}} onPress={onClick}>
+            <Text style={{textAlign: 'center', color: color, fontSize: 24}}>{title}</Text>
         </TouchableOpacity>
     );
 }

@@ -9,6 +9,177 @@ function CalculatorHorizontal({disp, setDisp, activeFunction, setFunction, lastN
     const [isInv, setInv] = useState(false)
     const [inRad, setRad] = useState(true);
 
+    const buttons = [
+        {
+            backgroundColor: '#505050',
+            title: '(',
+            onClick: () => {}
+        },
+        {
+            backgroundColor: '#505050',
+            title: ')',
+            onClick: () => {}
+        },
+        {
+            backgroundColor: '#505050',
+            title: 'mc',
+            onClick: () => setMemory(0)
+        },
+        {
+            backgroundColor: '#505050',
+            title: 'm+',
+            onClick: () => setMemory(memory+Number(disp))
+        },
+        {
+            backgroundColor: '#505050',
+            title: 'm-',
+            onClick: () => setMemory(memory-disp)
+        },
+        {
+            backgroundColor: '#505050',
+            title: 'mr',
+            onClick: () => setDisp(memory)
+        },
+        {
+            backgroundColor: '#505050',
+            title: '2nd',
+            onClick: () => setInv(!isInv)
+        },
+        {
+            backgroundColor: '#505050',
+            title: 'x^2',
+            onClick: () => {func((num) => {return num**2})}
+        },
+        {
+            backgroundColor: '#505050',
+            title: 'x^3',
+            onClick: () => {func((num) => {return num**3})}
+        },
+        {
+            backgroundColor: '#505050',
+            title: 'x^y',
+            onClick: () => {func2((num1, num2) => Math.pow(num1, num2))}
+        },
+        {
+            backgroundColor: '#505050',
+            title: (isInv ? '2^x' : 'e^x'),
+            onClick: ( isInv ? () => {func((num) => {return 2**num})} : () => {func((num) => Math.exp(num))} )
+        },
+        {
+            backgroundColor: '#505050',
+            title: '10^x',
+            onClick: () => {func((num) => {return 10**num})}
+        },
+        {
+            backgroundColor: '#505050',
+            title: '1/x',
+            onClick: () => {func((num) => {return 1/num})}
+        },
+        {
+            backgroundColor: '#505050',
+            title: '√x',
+            onClick: () => {func((num) => Math.sqrt(num))}
+        },
+        {
+            backgroundColor: '#505050',
+            title: '∛x',
+            onClick: () => {func((num) => Math.cbrt(num))}
+        },
+        {
+            backgroundColor: '#505050',
+            title: 'y√x',
+            onClick: () => {func2((num1, num2) => Math.pow(num1, -num2))}
+        },
+        {
+            backgroundColor: '#505050',
+            title: 'ln',
+            onClick: () => {func((num) => Math.log(num))}
+        },
+        {
+            backgroundColor: '#505050',
+            title: (isInv ? 'log2' : 'log10'),
+            onClick: ( isInv ? () => {func((num) => Math.log2(num))} : () => {func((num) => Math.log10(num))} )
+        },
+        {
+            backgroundColor: '#505050',
+            title: 'x!',
+            onClick: () => {func((num) =>  fact(num))}
+        },
+        {
+            backgroundColor: '#505050',
+            title: (isInv ? 'sin^-1' : 'sin'),
+            onClick: ( isInv ?
+                () => { func((num) => Math.asin(( inRad ? num : num * (Math.PI/180) )) ) } :
+                () => { func((num) => Math.sin(( inRad ? num : num * (Math.PI/180) )) ) }
+            )
+        },
+        {
+            backgroundColor: '#505050',
+            title: (isInv ? 'cos^-1' : 'cos'),
+            onClick: ( isInv ?
+                () => { func((num) => Math.acos(( inRad ? num : num * (Math.PI/180) )) ) } :
+                () => { func((num) => Math.cos(( inRad ? num : num * (Math.PI/180) )) ) }
+            )
+        },
+        {
+            backgroundColor: '#505050',
+            title: (isInv ? 'tan^-1' : 'tan'),
+            onClick: ( isInv ?
+                () => { func((num) => Math.atan(( inRad ? num : num * (Math.PI/180) )) ) } :
+                () => { func((num) => Math.tan(( inRad ? num : num * (Math.PI/180) )) ) }
+            )
+        },
+        {
+            backgroundColor: '#505050',
+            title: 'e',
+            onClick: () => setDisp(Math.E)
+        },
+        {
+            backgroundColor: '#505050',
+            title: 'EE',
+            onClick: () => {func2((num1, num2) => {return num1 * (10**num2)})}
+        },
+        {
+            backgroundColor: '#505050',
+            title: (inRad ? 'Rad' : 'Deg'),
+            onClick: () => setRad(!inRad)
+        },
+        {
+            backgroundColor: '#505050',
+            title: (isInv ? 'sinh^-1' : 'sinh'),
+            onClick: ( isInv ?
+                () => { func((num) => Math.asinh(( inRad ? num : num * (Math.PI/180) )) ) } :
+                () => { func((num) => Math.sinh(( inRad ? num : num * (Math.PI/180) )) ) }
+            )
+        },
+        {
+            backgroundColor: '#505050',
+            title: (isInv ? 'cosh^-1' : 'cosh'),
+            onClick: ( isInv ?
+                () => { func((num) => Math.acosh(( inRad ? num : num * (Math.PI/180) )) ) } :
+                () => { func((num) => Math.cosh(( inRad ? num : num * (Math.PI/180) )) ) }
+            )
+        },
+        {
+            backgroundColor: '#505050',
+            title: (isInv ? 'tanh^-1' : 'tanh'),
+            onClick: ( isInv ?
+                () => { func((num) => Math.atanh(( inRad ? num : num * (Math.PI/180) )) ) } :
+                () => { func((num) => Math.tanh(( inRad ? num : num * (Math.PI/180) )) ) }
+            )
+        },
+        {
+            backgroundColor: '#505050',
+            title: 'π',
+            onClick: () => setDisp(Math.PI)
+        },
+    {
+            backgroundColor: '#505050',
+            title: 'Rand',
+            onClick: () => setDisp(Math.random())
+        }
+    ];
+
     const func = (func) => {
         if(lastNum) {
             setDisp(func(Number(disp)));
@@ -34,72 +205,26 @@ function CalculatorHorizontal({disp, setDisp, activeFunction, setFunction, lastN
 
     return(
         <View style={styles.container}>
-            <View style={styles.row}>
-                <Button text="(" color="#505050" onClick={() => {}}/>
-                <Button text=")" color="#505050" onClick={() => {}}/>
-                <Button text="mc" color="#505050" onClick={() => setMemory(0)}/>
-                <Button text="m+" color="#505050" onClick={() => setMemory(memory+Number(disp))}/>
-                <Button text="m-" color="#505050" onClick={() => setMemory(memory-disp)}/>
-                <Button text="mr" color="#505050" onClick={() => setDisp(memory)}/>
-            </View>
-            <View style={styles.row}>
-                <Button text="2nd" color="#505050" onClick={() => {setInv(!isInv)}}/>
-                <Button text="x^2" color="#505050" onClick={() => {func((num) => {return num**2})}}/>
-                <Button text="x^3" color="#505050" onClick={() => {func((num) => {return num**3})}}/>
-                <Button text="x^y" color="#505050" onClick={() => {func2((num1, num2) => Math.pow(num1, num2))}}/>
-                {isInv ? <Button text="2^x" color="#505050" onClick={() => {func((num) => {return 2**num})}}/> :
-                    <Button text="e^x" color="#505050" onClick={() => {func((num) => Math.exp(num))}}/>}
-                <Button text="10^x" color="#505050" onClick={() => {func((num) => {return 10**num})}}/>
-            </View>
-            <View style={styles.row}>
-                <Button text="1/x" color="#505050" onClick={() => {func((num) => {return 1/num})}}/>
-                <Button text="√x" color="#505050" onClick={() => {func((num) => Math.sqrt(num))}}/>
-                <Button text="∛x" color="#505050" onClick={() => {func((num) => Math.cbrt(num))}}/>
-                <Button text="y√x" color="#505050" onClick={() => {func2((num1, num2) => Math.pow(num1, -num2))}}/>
-                <Button text="ln" color="#505050" onClick={() => {func((num) => Math.log(num))}}/>
-                {isInv ? <Button text="log2" color="#505050" onClick={() => {func((num) => Math.log2(num))}}/> :
-                    <Button text="log10" color="#505050" onClick={() => {func((num) => Math.log10(num))}}/>}
-            </View>
-            <View style={styles.row}>
-                <Button text="x!" color="#505050" onClick={() => {func((num) =>  fact(num))}}/>
-                {isInv ? <Button text="sin^-1" color="#505050" onClick={() => { func( (num) => Math.asin( ( inRad ? num : num * (Math.PI/180) ) ) ) }}/> :
-                    <Button text="sin" color="#505050" onClick={() => { func( (num) => Math.sin( ( inRad ? num : num * (Math.PI/180) ) ) ) }}/>}
-                {isInv ? <Button text="cos^-1" color="#505050" onClick={() => { func( (num) => Math.acos( ( inRad ? num : num * (Math.PI/180) ) ) ) }}/> :
-                    <Button text="cos" color="#505050" onClick={() => { func( (num) => Math.cos( ( inRad ? num : num * (Math.PI/180) ) ) ) }}/>}
-                {isInv ? <Button text="tan^-1" color="#505050" onClick={() => { func( (num) => Math.atan( ( inRad ? num : num * (Math.PI/180) ) ) ) }}/> :
-                    <Button text="tan" color="#505050" onClick={() => { func( (num) => Math.tan( ( inRad ? num : num * (Math.PI/180) ) ) ) }}/>}
-                <Button text="e" color="#505050" onClick={() => setDisp(Math.E)}/>
-                <Button text="EE" color="#505050" onClick={() => {func2((num1, num2) => {return num1 * (10**num2)})}}/>
-            </View>
-            <View style={styles.row}>
-                <Button text={(inRad ? "Rad" : "Deg")} color="#505050" onClick={() => setRad(!inRad)}/>
-                {isInv ? <Button text="sinh^-1" color="#505050" onClick={() => { func( (num) => Math.asinh( ( inRad ? num : num * (Math.PI/180) ) ) ) }}/> :
-                    <Button text="sinh" color="#505050" onClick={() => { func( (num) => Math.sinh( ( inRad ? num : num * (Math.PI/180) ) ) ) }}/>}
-                {isInv ? <Button text="cosh^-1" color="#505050" onClick={() => { func( (num) => Math.acosh( ( inRad ? num : num * (Math.PI/180) ) ) ) }}/> :
-                    <Button text="cosh" color="#505050" onClick={() => { func( (num) => Math.cosh( ( inRad ? num : num * (Math.PI/180) ) ) ) }}/>}
-                {isInv ? <Button text="tanh^-1" color="#505050" onClick={() => { func( (num) => Math.atanh( ( inRad ? num : num * (Math.PI/180) ) ) ) }}/> :
-                    <Button text="tanh" color="#505050" onClick={() => { func( (num) => Math.tanh( ( inRad ? num : num * (Math.PI/180) ) ) ) }}/>}
-                <Button text="π" color="#505050" onClick={() => {setDisp(Math.PI)}}/>
-                <Button text="Rand" color="#505050" onClick={() => {setDisp(Math.random())}}/>
-            </View>
+            {buttons.map(button => <Button
+                backgroundColor={button.backgroundColor}
+                title={button.title}
+                color={button.color}
+                flex={button.flex}
+                disabled={button.disabled}
+                onClick={() => button.onClick()}
+            />)}
         </View>
     );
-
-
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 6,
-        flexDirection: 'column',
-        gap: 4
-    },
-    row: {
-        flex: 1,
         flexDirection: 'row',
+        flexWrap: 'wrap',
         gap: 4,
-        alignContent: 'space-around'
-    },
+        alignContent: 'stretch'
+    }
 });
 
 export default CalculatorHorizontal;

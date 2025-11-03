@@ -7,6 +7,105 @@ import Button from './Button.tsx';
 
 function CalculatorKeyboard({disp, setDisp, lastNum, setLast, action, setAction, number, setNumber, activeFunction, setFunction}) {
 
+    const buttons = [
+        {
+            backgroundColor: '#505050',
+            title: 'AC',
+            onClick: () => clear()
+        },
+        {
+            backgroundColor: '#505050',
+            title: '+/-',
+            onClick: () => setDisp(-disp)
+        },
+        {
+            backgroundColor: '#505050',
+            title: '%',
+            onClick: () => ack('%')
+        },
+        {
+            backgroundColor: '#E08000',
+            title: 'x',
+            onClick: () => ack('*')
+        },
+        {
+            backgroundColor: '#707070',
+            title: '1',
+            onClick: () => num(1)
+        },
+        {
+            backgroundColor: '#707070',
+            title: '2',
+            onClick: () => num(2)
+        },
+        {
+            backgroundColor: '#707070',
+            title: '3',
+            onClick: () => num(3)
+        },
+        {
+            backgroundColor: '#E08000',
+            title: '/',
+            onClick: () => ack('/')
+        },
+        {
+            backgroundColor: '#707070',
+            title: '4',
+            onClick: () => num(4)
+        },
+        {
+            backgroundColor: '#707070',
+            title: '5',
+            onClick: () => num(5)
+        },
+        {
+            backgroundColor: '#707070',
+            title: '6',
+            onClick: () => num(6)
+        },
+        {
+            backgroundColor: '#E08000',
+            title: '+',
+            onClick: () => ack('+')
+        },
+        {
+            backgroundColor: '#707070',
+            title: '7',
+            onClick: () => num(7)
+        },
+        {
+            backgroundColor: '#707070',
+            title: '8',
+            onClick: () => num(8)
+        },
+        {
+            backgroundColor: '#707070',
+            title: '9',
+            onClick: () => num(9)
+        },
+        {
+            backgroundColor: '#E08000',
+            title: '-',
+            onClick: () => ack('-')
+        },
+        {
+            backgroundColor: '#707070',
+            title: '0',
+            flex: 2,
+            onClick: () => num(0)
+        },
+        {
+            backgroundColor: '#707070',
+            title: ',',
+            onClick: () => dot()
+        },
+        {
+            backgroundColor: '#E08000',
+            title: '=',
+            onClick: () => solve()
+        },
+    ];
+
     const clear = () => {
         setDisp('0');
         setNumber(0);
@@ -83,37 +182,14 @@ function CalculatorKeyboard({disp, setDisp, lastNum, setLast, action, setAction,
 
     return(
         <View style={styles.container}>
-            <View style={styles.row}>
-                <Button text="AC" color="#505050" onClick={() => clear()}/>
-                <Button text="+/-" color="#505050" onClick={() => setDisp(-disp)}/>
-                <Button text="%" color="#505050" onClick={() => ack('%')}/>
-                <Button text="x" color="#E08000" onClick={() => ack('*')}/>
-            </View>
-            <View style={styles.row}>
-                <Button text="1" color="#707070" onClick={() => num(1)}/>
-                <Button text="2" color="#707070" onClick={() => num(2)}/>
-                <Button text="3" color="#707070" onClick={() => num(3)}/>
-                <Button text="/" color="#E08000" onClick={() => ack('/')}/>
-            </View>
-            <View style={styles.row}>
-                <Button text="4" color="#707070" onClick={() => num(4)}/>
-                <Button text="5" color="#707070" onClick={() => num(5)}/>
-                <Button text="6" color="#707070" onClick={() => num(6)}/>
-                <Button text="+" color="#E08000" onClick={() => ack('+')}/>
-            </View>
-            <View style={styles.row}>
-                <Button text="7" color="#707070" onClick={() => num(7)}/>
-                <Button text="8" color="#707070" onClick={() => num(8)}/>
-                <Button text="9" color="#707070" onClick={() => num(9)}/>
-                <Button text="-" color="#E08000" onClick={() => ack('-')}/>
-            </View>
-            <View style={styles.row}>
-                <TouchableOpacity style={{flex: 2, backgroundColor: '#707070', justifyContent: 'center'}} onPress={() => num(0)}>
-                    <Text style={{textAlign: 'left', color: 'white', fontSize: 24, paddingLeft: 40}}>0</Text>
-                </TouchableOpacity>
-                <Button text="." color="#707070" onClick={() => {setDisp(disp+".")}}/>
-                <Button text="=" color="#E08000" onClick={() => solve()}/>
-            </View>
+            {buttons.map(button => <Button
+                backgroundColor={button.backgroundColor}
+                title={button.title}
+                color={button.color}
+                flex={button.flex}
+                disabled={button.disabled}
+                onClick={() => button.onClick()}
+            />)}
         </View>
     );
 }
@@ -121,15 +197,11 @@ function CalculatorKeyboard({disp, setDisp, lastNum, setLast, action, setAction,
 const styles = StyleSheet.create({
     container: {
         flex: 4,
-        flexDirection: 'column',
-        gap: 4
-    },
-    row: {
-        flex: 1,
         flexDirection: 'row',
+        flexWrap: 'wrap',
         gap: 4,
-        alignContent: 'space-around'
-    },
+        alignContent: 'stretch'
+    }
 });
 
 export default CalculatorKeyboard;
