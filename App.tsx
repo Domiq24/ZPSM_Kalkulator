@@ -12,6 +12,7 @@ import {
 } from 'react-native-safe-area-context';
 import CalculatorKeyboard from './Components/CalculatorKeyboard.tsx';
 import CalculatorHorizontal from './Components/CalculatorHorizontal.tsx';
+import SplashScreen from 'react-native-splash-screen';
 
 function App() {
     const [disp, setDisp] = useState('0');
@@ -21,6 +22,10 @@ function App() {
     const [number, setNumber] = useState(0);
     const [activeFunction, setFunction] = useState(() => () => {});
     const [memory, setMemory] = useState(0);
+
+    useEffect(() => {
+        SplashScreen.hide();
+    }, []);
 
     return (
         <SafeAreaProvider>
