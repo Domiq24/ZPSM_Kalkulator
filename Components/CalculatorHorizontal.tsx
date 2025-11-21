@@ -26,12 +26,12 @@ function CalculatorHorizontal({setDisp, memory, setMemory, functions, options, s
         {
             backgroundColor: '#505050',
             title: 'm+',
-            onClick: () => setMemory(memory+Number(solution()))
+            onClick: () => { setMemory(memory+Number(functions.solve())); functions.clear(); }
         },
         {
             backgroundColor: '#505050',
             title: 'm-',
-            onClick: () => setMemory(memory-Number(solution()))
+            onClick: () => { setMemory(memory-Number(functions.solve())); functions.clear(); }
         },
         {
             backgroundColor: '#505050',
